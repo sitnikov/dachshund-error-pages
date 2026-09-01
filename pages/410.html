@@ -53,6 +53,9 @@
   }
   .rule { height: 1px; width: 3rem; margin: 0.9rem auto; background: var(--steel); }
   p { margin: 0; font-size: 0.8rem; line-height: 1.65; }
+  a { color: var(--signal); text-decoration: none; border-bottom: 1px solid var(--signal); }
+  a:focus-visible { outline: 1px solid var(--bright); outline-offset: 3px; }
+  .action { margin-top: 1.1rem; font-size: 0.75rem; letter-spacing: 0.06em; }
   /* A fade is not motion: it stays on under prefers-reduced-motion. */
   .zzz { animation: doze 4s ease-in-out infinite; }
   .zzz:nth-child(2) { animation-delay: 0.6s; }
@@ -81,10 +84,11 @@
     <line x1="0" y1="100.5" x2="280" y2="100.5" stroke="#26323E"/>
   </svg>
   <p class="code">410</p>
-  <h1>This link has gone stale</h1>
+  <h1>Long gone</h1>
   <div class="rule"></div>
-  <p>A console link works only for a short while after it is issued.
-     Go back to your control panel and open the console again.</p>
+  <p>This page has been removed and is not coming back. Update your
+     bookmarks, or go back to the home page.</p>
+  <p class="action"><a href="/">Go to the home page</a></p>
 </div>
 </body>
 </html>
