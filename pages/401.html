@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>401</title>
+<style>
+  :root {
+    --ground: #0A0E13;
+    --ground-2: #0E141B;
+    --steel: #46586B;
+    --steel-dim: #26323E;
+    --text: #93A6B8;
+    --bright: #C6D4E0;
+    --signal: #C8873A;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    padding: 1.5rem;
+    background: var(--ground);
+    color: var(--text);
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+                 "Liberation Mono", monospace;
+    display: grid;
+    place-items: center;
+  }
+  .plate {
+    width: min(100%, 24rem);
+    padding: 1.5rem 1.75rem 2rem;
+    text-align: center;
+    background: var(--ground-2);
+    border: 1px solid var(--steel-dim);
+  }
+  svg { display: block; width: 100%; height: auto; }
+  .code {
+    margin: 1.1rem 0 0;
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    color: var(--signal);
+  }
+  h1 {
+    margin: 0.8rem 0 0;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bright);
+  }
+  .rule { height: 1px; width: 3rem; margin: 0.9rem auto; background: var(--steel); }
+  p { margin: 0; font-size: 0.8rem; line-height: 1.65; }
+  .tag { transform-origin: 140px 65px; animation: swing 2.4s ease-in-out infinite alternate; }
+  @keyframes swing { from { transform: rotate(-12deg) } to { transform: rotate(12deg) } }
+  @media (prefers-reduced-motion: reduce) { .tag { animation: none; } }
+</style>
+</head>
+<body>
+<div class="plate">
+  <svg viewBox="0 0 280 110" role="img" aria-label="A dachshund sitting and facing you, wearing a collar with a blank tag">
+    <g fill="#C8873A">
+      <path d="M116 100 V78 a24 24 0 0 1 48 0 V100 Z"/>
+      <rect x="118" y="91" width="16" height="9" rx="4" fill="#8E5B24"/>
+      <rect x="146" y="91" width="16" height="9" rx="4" fill="#8E5B24"/>
+      <circle cx="140" cy="42" r="19"/>
+      <rect x="113" y="32" width="12" height="32" rx="6" fill="#8E5B24"/>
+      <rect x="155" y="32" width="12" height="32" rx="6" fill="#8E5B24"/>
+      <ellipse cx="140" cy="51" rx="10" ry="7" fill="#8E5B24"/>
+      <ellipse cx="140" cy="48" rx="3.5" ry="2.5" fill="#0A0E13"/>
+      <circle cx="132" cy="38" r="2.4" fill="#0A0E13"/>
+      <circle cx="148" cy="38" r="2.4" fill="#0A0E13"/>
+    </g>
+    <rect x="123" y="60" width="34" height="5" rx="2.5" fill="#46586B"/>
+    <g class="tag">
+      <line x1="140" y1="65" x2="140" y2="70" stroke="#46586B" stroke-width="1.5"/>
+      <circle cx="140" cy="75.5" r="5.5" fill="#0A0E13" stroke="#46586B"/>
+    </g>
+    <line x1="0" y1="100.5" x2="280" y2="100.5" stroke="#26323E"/>
+  </svg>
+  <p class="code">401</p>
+  <h1>Nothing on the tag</h1>
+  <div class="rule"></div>
+  <p>This console needs to know who you are. Sign in to your control panel
+     and open the console from there.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>404</title>
+<style>
+  :root {
+    --ground: #0A0E13;
+    --ground-2: #0E141B;
+    --steel: #46586B;
+    --steel-dim: #26323E;
+    --text: #93A6B8;
+    --bright: #C6D4E0;
+    --signal: #C8873A;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    padding: 1.5rem;
+    background: var(--ground);
+    color: var(--text);
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+                 "Liberation Mono", monospace;
+    display: grid;
+    place-items: center;
+  }
+  .plate {
+    width: min(100%, 24rem);
+    padding: 1.5rem 1.75rem 2rem;
+    text-align: center;
+    background: var(--ground-2);
+    border: 1px solid var(--steel-dim);
+  }
+  svg { display: block; width: 100%; height: auto; }
+  .code {
+    margin: 1.1rem 0 0;
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    color: var(--signal);
+  }
+  h1 {
+    margin: 0.8rem 0 0;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bright);
+  }
+  .rule { height: 1px; width: 3rem; margin: 0.9rem auto; background: var(--steel); }
+  p { margin: 0; font-size: 0.8rem; line-height: 1.65; }
+  .dirt { animation: fling 1.6s ease-out infinite; }
+  .dirt:nth-child(2) { animation-delay: 0.4s; }
+  .dirt:nth-child(3) { animation-delay: 0.8s; }
+  .dirt:nth-child(4) { animation-delay: 1.2s; }
+  @keyframes fling {
+    0%   { transform: translate(0, 0);       opacity: 0; }
+    15%  { opacity: 1; }
+    100% { transform: translate(14px, -26px); opacity: 0; }
+  }
+  .tail { transform-origin: 60px 62px; animation: wag 0.5s ease-in-out infinite alternate; }
+  @keyframes wag { from { transform: rotate(-8deg) } to { transform: rotate(10deg) } }
+  @media (prefers-reduced-motion: reduce) {
+    .dirt, .tail { animation: none; }
+    .dirt { opacity: 0.7; }
+  }
+</style>
+</head>
+<body>
+<div class="plate">
+  <svg viewBox="0 0 280 110" role="img" aria-label="A dachshund with its head down a hole in the floor">
+    <ellipse cx="186" cy="100" rx="34" ry="6" fill="#0A0E13" stroke="#26323E"/>
+    <g fill="#8E5B24">
+      <circle class="dirt" cx="224" cy="86" r="2.5"/>
+      <circle class="dirt" cx="232" cy="80" r="2"/>
+      <circle class="dirt" cx="228" cy="92" r="1.8"/>
+      <circle class="dirt" cx="238" cy="88" r="2.2"/>
+    </g>
+    <g fill="#C8873A">
+      <path class="tail" d="M60 62 Q44 58 42 40" fill="none" stroke="#C8873A" stroke-width="6" stroke-linecap="round"/>
+      <rect x="68" y="78" width="11" height="22" rx="3"/>
+      <rect x="84" y="78" width="11" height="22" rx="3"/>
+      <rect x="58" y="50" width="122" height="36" rx="18"/>
+      <circle cx="184" cy="70" r="17"/>
+      <rect x="177" y="80" width="14" height="34" rx="7"/>
+      <rect x="166" y="58" width="12" height="32" rx="6" fill="#8E5B24"/>
+      <circle cx="192" cy="66" r="2.4" fill="#0A0E13"/>
+    </g>
+    <rect x="0" y="100" width="280" height="12" fill="#0E141B"/>
+    <line x1="0" y1="100.5" x2="152" y2="100.5" stroke="#26323E"/>
+    <line x1="220" y1="100.5" x2="280" y2="100.5" stroke="#26323E"/>
+  </svg>
+  <p class="code">404</p>
+  <h1>Nothing buried here</h1>
+  <div class="rule"></div>
+  <p>There is nothing at this address. Check the link you followed,
+     or go back to your control panel.</p>
+</div>
+</body>
+</html>

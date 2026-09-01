@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dachshund-error-pages</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --ground: #0A0E13;
+    --ground-2: #0E141B;
+    --steel: #46586B;
+    --steel-dim: #26323E;
+    --text: #93A6B8;
+    --bright: #C6D4E0;
+    --signal: #C8873A;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+            "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--text);
+    font: 0.8rem/1.6 var(--mono);
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+  a { color: var(--signal); text-decoration: none; border-bottom: 1px solid var(--signal); }
+  a:focus-visible, button:focus-visible { outline: 1px solid var(--bright); outline-offset: 3px; }
+  button {
+    font: inherit; color: inherit; background: none;
+    border: 1px solid var(--steel-dim);
+    padding: 0.25rem 0.7rem; cursor: pointer; letter-spacing: 0.06em;
+  }
+  button:hover { border-color: var(--steel); color: var(--bright); }
+  button[aria-pressed="true"] { border-color: var(--signal); color: var(--signal); }
+  .small { font-size: 0.7rem; letter-spacing: 0.06em; }
+  .spacer { flex: 1; }
+
+  header {
+    display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+    padding: 0.9rem 1.5rem; border-bottom: 1px solid var(--steel-dim);
+  }
+  header h1 {
+    margin: 0; font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--bright);
+  }
+
+  .app { display: grid; grid-template-columns: 15rem minmax(0, 1fr); min-height: 0; }
+
+  nav { border-right: 1px solid var(--steel-dim); padding: 0.75rem 0; overflow: auto; }
+  nav ul { list-style: none; margin: 0; padding: 0; }
+  nav li button {
+    display: grid; grid-template-columns: 2.6rem 1fr; gap: 0.7rem; align-items: baseline;
+    width: 100%; text-align: left; border: 0; border-left: 2px solid transparent;
+    padding: 0.5rem 1.3rem;
+  }
+  nav li button .code { color: var(--bright); letter-spacing: 0.12em; }
+  nav li button .title { font-size: 0.7rem; letter-spacing: 0.03em; }
+  nav li button[aria-current="true"] { border-left-color: var(--signal); background: var(--ground-2); }
+  nav li button[aria-current="true"] .code { color: var(--signal); }
+  nav .note { margin: 0; padding: 0.5rem 1.3rem; font-size: 0.7rem; }
+
+  main { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto; min-width: 0; min-height: 0; }
+  .toolbar {
+    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    padding: 0.7rem 1.5rem; border-bottom: 1px solid var(--steel-dim);
+  }
+  .stage { display: grid; place-items: center; padding: 1.5rem; min-height: 36rem; overflow: auto; }
+  .stage iframe {
+    display: block; width: 100%; height: 100%; min-height: 33rem;
+    border: 1px dashed var(--steel-dim); background: var(--ground);
+  }
+  .stage.mobile iframe { width: 390px; height: 700px; min-height: 0; }
+
+  .config { border-top: 1px solid var(--steel-dim); padding: 0.8rem 1.5rem 1.2rem; }
+  .config .tabs { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.7rem; }
+  .config pre {
+    margin: 0; padding: 0.9rem 1.1rem; overflow-x: auto;
+    background: var(--ground-2); border: 1px solid var(--steel-dim);
+    font: 0.75rem/1.6 var(--mono); color: var(--bright);
+  }
+  .config pre .c { color: var(--steel); }
+  .config pre .hl { color: var(--signal); }
+
+  @media (max-width: 48rem) {
+    .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
+    nav { border-right: 0; border-bottom: 1px solid var(--steel-dim); padding: 0.5rem 0.75rem; }
+    nav ul { display: flex; gap: 0.25rem; overflow-x: auto; }
+    nav li button { grid-template-columns: auto; padding: 0.4rem 0.7rem; border-left: 0; border-bottom: 2px solid transparent; }
+    nav li button[aria-current="true"] { border-bottom-color: var(--signal); }
+    nav li button .title { display: none; }
+    .stage.mobile iframe { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>dachshund-error-pages</h1>
+  <span class="small" id="count"></span>
+  <span class="spacer"></span>
+  <a class="small" href="https://github.com/sitnikov/dachshund-error-pages">GitHub</a>
+</header>
+
+<div class="app">
+  <nav aria-label="Error pages"><ul id="list"></ul></nav>
+
+  <main>
+    <div class="toolbar small">
+      <button type="button" data-viewport="desktop" aria-pressed="true">Desktop</button>
+      <button type="button" data-viewport="mobile" aria-pressed="false">Mobile</button>
+      <button type="button" id="replay">Replay</button>
+      <span class="spacer"></span>
+      <a id="open" href="#" target="_blank" rel="noopener">Open page in new tab</a>
+    </div>
+
+    <div class="stage" id="stage">
+      <iframe id="frame" title="Error page preview"></iframe>
+    </div>
+
+    <section class="config" aria-label="Server configuration">
+      <div class="tabs small">
+        <button type="button" data-server="nginx" aria-pressed="true">nginx</button>
+        <button type="button" data-server="apache" aria-pressed="false">Apache</button>
+        <button type="button" data-server="caddy" aria-pressed="false">Caddy</button>
+        <span class="spacer"></span>
+        <button type="button" id="copy">Copy</button>
+      </div>
+      <pre><code id="snippet"></code></pre>
+    </section>
+  </main>
+</div>
+
+<script>
+(() => {
+  const ROOT = '/var/www/dachshund-error-pages/pages';
+  const state = { pages: [], code: null, server: 'nginx' };
+
+  const SNIPPETS = {
+    nginx: codes => [
+      '# nginx: inside the server { } block',
+      ...codes.map(c => `error_page ${c} /_errors/${c}.html;`),
+      '',
+      'location ^~ /_errors/ {',
+      `    alias ${ROOT}/;`,
+      '    internal;',
+      '}',
+    ],
+    apache: codes => [
+      '# Apache httpd: inside a <VirtualHost> block',
+      `Alias "/_errors/" "${ROOT}/"`,
+      `<Directory "${ROOT}">`,
+      '    Require all granted',
+      '</Directory>',
+      ...codes.map(c => `ErrorDocument ${c} /_errors/${c}.html`),
+    ],
+    caddy: codes => [
+      '# Caddyfile: inside a site block',
+      `handle_errors ${codes.join(' ')} {`,
+      `    root * ${ROOT}`,
+      '    rewrite * /{err.status_code}.html',
+      '    file_server',
+      '}',
+    ],
+  };
+
+  const $ = id => document.getElementById(id);
+  const list = $('list'), frame = $('frame'), stage = $('stage'),
+        open = $('open'), snippet = $('snippet'), count = $('count');
+
+  const pageUrl = code => `pages/${code}.html`;
+  const codeFromHash = () => {
+    const n = Number(location.hash.slice(1));
+    return state.pages.some(p => p.code === n) ? n : null;
+  };
+
+  function renderList() {
+    list.replaceChildren(...state.pages.map(p => {
+      const li = document.createElement('li');
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.code = p.code;
+      b.innerHTML = `<span class="code">${p.code}</span><span class="title"></span>`;
+      b.querySelector('.title').textContent = p.title;
+      b.addEventListener('click', () => select(p.code));
+      li.append(b);
+      return li;
+    }));
+    count.textContent = `${state.pages.length} pages`;
+  }
+
+  function renderSnippet() {
+    const lines = SNIPPETS[state.server](state.pages.map(p => p.code));
+    const own = new RegExp(`\\b${state.code}\\b`);
+    snippet.replaceChildren(...lines.flatMap((line, i) => {
+      const span = document.createElement('span');
+      span.textContent = line;
+      if (line.startsWith('#')) span.className = 'c';
+      else if (own.test(line)) span.className = 'hl';
+      return i ? ['\n', span] : [span];
+    }));
+  }
+
+  function select(code) {
+    state.code = code;
+    for (const b of list.querySelectorAll('button')) {
+      b.toggleAttribute('aria-current', Number(b.dataset.code) === code);
+      if (Number(b.dataset.code) === code) b.setAttribute('aria-current', 'true');
+    }
+    frame.src = pageUrl(code);
+    open.href = pageUrl(code);
+    document.title = `${code} · dachshund-error-pages`;
+    if (location.hash !== `#${code}`) history.replaceState(null, '', `#${code}`);
+    renderSnippet();
+  }
+
+  window.addEventListener('hashchange', () => {
+    const code = codeFromHash();
+    if (code !== null && code !== state.code) select(code);
+  });
+
+  for (const b of document.querySelectorAll('[data-viewport]')) {
+    b.addEventListener('click', () => {
+      for (const o of document.querySelectorAll('[data-viewport]')) o.setAttribute('aria-pressed', o === b);
+      stage.classList.toggle('mobile', b.dataset.viewport === 'mobile');
+    });
+  }
+
+  for (const b of document.querySelectorAll('[data-server]')) {
+    b.addEventListener('click', () => {
+      for (const o of document.querySelectorAll('[data-server]')) o.setAttribute('aria-pressed', o === b);
+      state.server = b.dataset.server;
+      renderSnippet();
+    });
+  }
+
+  $('replay').addEventListener('click', () => { frame.src = pageUrl(state.code); });
+
+  $('copy').addEventListener('click', async () => {
+    const btn = $('copy');
+    try {
+      await navigator.clipboard.writeText(snippet.textContent + '\n');
+      btn.textContent = 'Copied';
+    } catch {
+      btn.textContent = 'Select and copy manually';
+    }
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+  });
+
+  fetch('manifest.json')
+    .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+    .then(m => {
+      state.pages = m.pages;
+      renderList();
+      select(codeFromHash() ?? state.pages[0].code);
+    })
+    .catch(err => {
+      list.innerHTML = '<p class="note"></p>';
+      list.querySelector('.note').textContent =
+        `Could not load manifest.json (${err.message}). Run scripts/build.sh and serve _site/ over HTTP.`;
+    });
+})();
+</script>
+</body>
+</html>

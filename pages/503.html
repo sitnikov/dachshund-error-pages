@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>503</title>
+<style>
+  :root {
+    --ground: #0A0E13;
+    --ground-2: #0E141B;
+    --steel: #46586B;
+    --steel-dim: #26323E;
+    --text: #93A6B8;
+    --bright: #C6D4E0;
+    --signal: #C8873A;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    padding: 1.5rem;
+    background: var(--ground);
+    color: var(--text);
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+                 "Liberation Mono", monospace;
+    display: grid;
+    place-items: center;
+  }
+  .plate {
+    width: min(100%, 24rem);
+    padding: 1.5rem 1.75rem 2rem;
+    text-align: center;
+    background: var(--ground-2);
+    border: 1px solid var(--steel-dim);
+  }
+  svg { display: block; width: 100%; height: auto; }
+  .code {
+    margin: 1.1rem 0 0;
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    color: var(--signal);
+  }
+  h1 {
+    margin: 0.8rem 0 0;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bright);
+  }
+  .rule { height: 1px; width: 3rem; margin: 0.9rem auto; background: var(--steel); }
+  p { margin: 0; font-size: 0.8rem; line-height: 1.65; }
+  a { color: var(--signal); text-decoration: none; border-bottom: 1px solid var(--signal); }
+  a:focus-visible { outline: 1px solid var(--bright); outline-offset: 3px; }
+  .retry { margin-top: 1.1rem; font-size: 0.75rem; letter-spacing: 0.06em; }
+  .led { animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 0.25 } 50% { opacity: 1 } }
+  .dog { animation: trot 0.36s ease-in-out infinite alternate; }
+  @keyframes trot { from { transform: translateY(0) } to { transform: translateY(-1.5px) } }
+  .leg { transform-box: fill-box; transform-origin: 50% 0; animation: step 0.36s ease-in-out infinite alternate; }
+  .leg.b { animation-direction: alternate-reverse; }
+  @keyframes step { from { transform: rotate(-14deg) } to { transform: rotate(14deg) } }
+  @media (prefers-reduced-motion: reduce) { .dog, .leg { animation: none; } .led { animation: none; opacity: 0.7; } }
+</style>
+</head>
+<body>
+<div class="plate">
+  <svg viewBox="0 0 280 110" role="img" aria-label="A dachshund trotting away from a server box that is being worked on">
+    <g fill="#0A0E13" stroke="#26323E">
+      <rect x="4" y="66" width="38" height="34" rx="2"/>
+      <rect x="11" y="74" width="2" height="18" fill="#26323E" stroke="none"/>
+      <rect x="16" y="74" width="2" height="18" fill="#26323E" stroke="none"/>
+      <rect x="21" y="74" width="2" height="18" fill="#26323E" stroke="none"/>
+      <rect class="led" x="32" y="81" width="4" height="4" fill="#C8873A" stroke="none"/>
+    </g>
+    <g transform="translate(30 0)">
+      <g class="dog" fill="#C8873A">
+        <path d="M60 62 Q44 52 46 36" fill="none" stroke="#C8873A" stroke-width="6" stroke-linecap="round"/>
+        <rect class="leg a" x="68" y="78" width="11" height="22" rx="3"/>
+        <rect class="leg b" x="84" y="78" width="11" height="22" rx="3"/>
+        <rect class="leg b" x="150" y="78" width="11" height="22" rx="3"/>
+        <rect class="leg a" x="166" y="78" width="11" height="22" rx="3"/>
+        <rect x="58" y="50" width="122" height="36" rx="18"/>
+        <circle cx="190" cy="48" r="17"/>
+        <rect x="196" y="44" width="36" height="14" rx="7"/>
+        <circle cx="229" cy="51" r="3.5" fill="#0A0E13"/>
+        <rect x="176" y="40" width="12" height="32" rx="6" fill="#8E5B24"/>
+        <circle cx="195" cy="42" r="2.4" fill="#0A0E13"/>
+      </g>
+    </g>
+    <line x1="0" y1="100.5" x2="280" y2="100.5" stroke="#26323E"/>
+  </svg>
+  <p class="code">503</p>
+  <h1>Out for a walk</h1>
+  <div class="rule"></div>
+  <p>The console is down for maintenance and will be back shortly.
+     Try again in a few minutes.</p>
+  <p class="retry"><a href="">Try again</a></p>
+</div>
+</body>
+</html>
